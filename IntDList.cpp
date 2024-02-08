@@ -2,6 +2,9 @@
 .cpp file that implements intDList.hpp file definitions. Only modify this file
 */
 
+// Richard Zhou
+// Rima El Brouzi
+
 #include "IntDList.hpp"
 #include <iostream>
 #include <sstream>
@@ -47,15 +50,21 @@ void IntDLList::insertInOrder(int value) {
         previous = current, current = current->next);
 
     if (!previous) {
+        // Insert node at the beginning of the linked list
         temp->prev = nullptr;
         temp->next = current;
-        current->prev = temp;
+        if (current) {
+            current->prev = temp;
+        }
         ListHead = temp;        
     } else {
+        // Insert in the middle or end of the linked list
         previous->next = temp;
         temp->prev = previous;
         temp->next = current;
-        current->prev = temp;
+        if (current) {
+            current->prev = temp;
+        }
     }
 }
 
@@ -160,23 +169,18 @@ bool IntDLList::isInList(int value) const {
 
 
 string IntDLList::addToString() const {
-    IntDLLNode* current = ListHead;
     
     // If the linked list is empty, return
-    if (!current) {
+    if (!ListHead) {
         return "";
     }
 
     // declare stringstream, traverse through linked list and add each node's value to the stream
     std::stringstream ss;
-    while (current != nullptr) {
+    for (IntDLLNode* current = ListHead; current != nullptr; current = current->next) {
         ss << current->info << " ";
-        current = current->next;
     }
 
-    // convert the stream to a string
-    std::string result = ss.str();
-
-    return result; 
+    return ss.str(); 
 }
 
